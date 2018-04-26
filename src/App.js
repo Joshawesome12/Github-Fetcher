@@ -8,16 +8,16 @@ class App extends Component {
     console.log('request inititated');
     axios.get('https://api.github.com/users/joshawesome12/repos')
     .then((data)=> {
-      console.log('in .then',data)
+      // console.log('in .then',data)
+      var repos = data.data;
+      console.log('repos in .then', repos)
       //Post Request for each repo
-      // data.data.forEach(repo =>{
-      //   console.log('reponame',repo.name);
-      //   axios.post('/repos',{repoName:repo.name}).then((data) =>{
-      //     console.log('data in axios.post', data);
-      //   })
-      // })
-      axios.post('/repos',{repoName:'something'}).catch((err) =>{
-        console.log('err',err);
+      repos.forEach(repo =>{
+        // console.log('reponame',repo.name);
+
+        axios.post('/repos',{repoName:repo.name}).catch((err) =>{
+          console.log('err',err);
+        })
       })
     }
     )
