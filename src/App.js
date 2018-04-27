@@ -10,7 +10,9 @@ class App extends Component {
     this.state = {
       repos: [],
       renderRepoList: false,
-      value:''
+      value:'',
+      loading:false,
+      failed:false
     }
   }
 
@@ -20,10 +22,12 @@ class App extends Component {
   }
 
   fetchRepos = (event) =>{
-    console.log('request inititated');
+    // console.log('request inititated');
+    this.setState({loading:true, repos:[],failed:false}, );
     axios.get(`https://api.github.com/users/${this.state.value}/repos`)
     .then((data)=> {
-      this.setState({value:''})
+      this.setState({value:''});
+      this.setState({loading:false});
       // console.log('in .then',data)
       var repos = data.data;
       this.setState({repos:data.data})
@@ -32,12 +36,18 @@ class App extends Component {
       //Post Request for each repo
       repos.forEach(repo =>{
         // console.log('userName',repo.owner.login);
-        axios.post('/repos',{'userName':repo.owner.login,'repoId':repo.id,repoName:repo.name,repoUrl:repo.url,'numStars':repo.stargazers_count}).catch((err) =>{
+        axios.post('/repos',{'userName':repo.owner.login,'repoId':repo.id,repoName:repo.name,repoUrl:repo.url,'numStars':repo.stargazers_count})
+        .catch((err) =>{
           console.log('err',err);
         })
       })
     }
     )
+    .catch((err) =>{
+      console.log('err',err);
+      this.setState({loading:false})
+      this.setState({failed:true})
+    })
     event.preventDefault();
   }
 
@@ -60,6 +70,8 @@ class App extends Component {
           <input type="submit" value="Fetch" onSubmit={this.fetchRepos}/>
         </form>
         </div>
+        {this.state.loading ? <h2>Loading...</h2> : null}
+        {this.state.failed ? <h4 className="failed">Failed! Enter a valid Github Username</h4> : null}
         <div className="repoList">
           {this.state.renderRepoList ? <RepoList repos={this.state.repos} /> : null}
         </div>
