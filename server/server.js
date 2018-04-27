@@ -37,3 +37,9 @@ app.post('/repos',function(req,res){
   Repo.addRepo({userName,repoId,repoName,repoUrl,numStars})
   res.end();
 })
+
+app.get('/topRepos',function(req,res){
+  Repo.getTopRepos().then((data)=>{
+    res.send(data);
+  });
+})

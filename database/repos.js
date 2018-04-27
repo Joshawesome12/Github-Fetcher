@@ -15,4 +15,8 @@ Repo.addRepo = function(data){
 	})
 }
 
+Repo.getTopRepos = function(data){
+	return db('repos').select('*').orderBy('numStars','desc').limit('25')
+}
+
 module.exports = Repo;
