@@ -9,14 +9,21 @@ class App extends Component {
     super(props);
     this.state = {
       repos: [],
-      renderRepoList: false
+      renderRepoList: false,
+      value:''
     }
   }
 
-  fetchRepos = () =>{
+
+  handleChange(event) {
+    this.setState({value:event.target.value});
+  }
+
+  fetchRepos = (event) =>{
     console.log('request inititated');
-    axios.get('https://api.github.com/users/joshawesome12/repos')
+    axios.get(`https://api.github.com/users/${this.state.value}/repos`)
     .then((data)=> {
+      this.setState({value:''})
       // console.log('in .then',data)
       var repos = data.data;
       this.setState({repos:data.data})
@@ -32,7 +39,9 @@ class App extends Component {
       })
     }
     )
+    event.preventDefault();
   }
+
 
   render() {
 
@@ -42,7 +51,15 @@ class App extends Component {
           <h1 className="App-title">Github Fetcher</h1>
         </header>
         <div>
-         <h2 className='fetch-title'>Enter a Github Username to fetch repos:     </h2><div className='fetch-input'><input placeholder="Github UserName"></input><button onClick={this.fetchRepos}>Fetch</button></div>
+         <h2 className='fetch-title'>Enter a Github Username to fetch repos     </h2>
+         {/* <div className='fetch-input'><input placeholder="Github UserName"></input><button onClick={this.fetchRepos}>Fetch</button></div> */}
+         <form onSubmit={this.fetchRepos}>
+          <label>
+            Github Username:
+            <input type="text" value={this.state.value} onChange={this.handleChange.bind(this)}/>
+          </label>
+          <input type="submit" value="Fetch" onSubmit={this.fetchRepos}/>
+        </form>
         </div>
         <div className="repoList">
           {this.state.renderRepoList ? <RepoList repos={this.state.repos} /> : null}
