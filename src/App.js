@@ -31,9 +31,8 @@ class App extends Component {
       console.log('state repos', this.state.repos)
       //Post Request for each repo
       repos.forEach(repo =>{
-        // console.log('reponame',repo.name);
-
-        axios.post('/repos',{repoName:repo.name}).catch((err) =>{
+        // console.log('userName',repo.owner.login);
+        axios.post('/repos',{'userName':repo.owner.login,'repoId':repo.id,repoName:repo.name,repoUrl:repo.url,'numStars':repo.stargazers_count}).catch((err) =>{
           console.log('err',err);
         })
       })

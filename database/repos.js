@@ -5,9 +5,13 @@ var Repo = {};
 Repo.addRepo = function(data){
 	console.log('in addRepo',data)
 	return db('repos').insert({
-		repoName:data
+		userName:data.userName,
+		repoId:data.repoId,
+		repoName:data.repoName,
+		repoUrl:data.repoUrl,
+		numStars:data.numStars
 	}).catch(err =>{
-		console.log('err',err);
+		console.log('------------------------------>err',err);
 	})
 }
 

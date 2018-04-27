@@ -27,9 +27,13 @@ app.get('/repos', function(req,res){
 })
 
 app.post('/repos',function(req,res){
-  console.log('------------------>in post repos', req.body);
   // call Repos model function
-  var repoName = req.body.repoName
-  Repo.addRepo(repoName)
+  var userName = req.body.userName;
+  console.log('------------------>in post repos', userName);
+  var repoName = req.body.repoName;
+  var repoId = req.body.repoId;
+  var repoUrl = req.body.repoUrl;
+  var numStars = req.body.numStars;
+  Repo.addRepo({userName,repoId,repoName,repoUrl,numStars})
   res.end();
 })
