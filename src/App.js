@@ -57,6 +57,7 @@ class App extends Component {
         })
       })
       this.setState({currentUser:`${data.data[0].owner.login}`})
+      this.getTopRepos();
     }
     )
     .catch((err) =>{
