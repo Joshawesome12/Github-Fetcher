@@ -8,3 +8,12 @@
 - Node.js
 - MySQL
 - Knex
+
+## Usage
+```
+npm start
+
+// New tab
+nodemon server/server.js
+
+```
