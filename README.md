@@ -6,6 +6,7 @@
 - Javascript
 - ReactJS
 - Node.js
+- Express.js
 - MySQL
 - Knex
 
@@ -13,7 +14,12 @@
 ```
 npm start
 
-// New tab
+// new tab
 nodemon server/server.js
 
+//new tab
+
+mysql -u root -p
+
+CREATE DATABASE githubfetcher
 ```
