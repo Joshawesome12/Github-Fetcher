@@ -7,6 +7,7 @@
 - ReactJS
 - Node.js
 - Express.js
+- Axios
 - MySQL
 - Knex
 
